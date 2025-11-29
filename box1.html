@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Mahasiswa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+        header {
+            background: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .kebijakan-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e8;
+            border-radius: 5px;
+        }
+        .file-link {
+            color: #2196F3;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        .file-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Halaman Mahasiswa</h1>
+        <p>Selamat datang di halaman mahasiswa Akademi Analis Kesehatan Delima Husada Gresik</p>
+    </header>
+    
+    <div class="container">
+        <h2>Konten Mahasiswa</h2>
+        <p>Ini adalah halaman untuk mahasiswa. Akses materi, jadwal, dan informasi akademik di sini.</p>
+        
+        <div class="kebijakan-section">
+            <h3>Kebijakan Akademi</h3>
+            <div id="display-kebijakan"></div>
+        </div>
+    </div>
+
+    <script>
+        // Load kebijakan dari Direktur dan Kaprodi
+        const roles = ['Direktur', 'Kaprodi'];
+        const displayDiv = document.getElementById('display-kebijakan');
+        
+        roles.forEach(role => {
+            const kebijakan = localStorage.getItem('sharedKebijakan_' + role);
+            const fileData = localStorage.getItem('sharedKebijakanFileData_' + role);
+            const fileName = localStorage.getItem('sharedKebijakanFileName_' + role);
+            
+            if (kebijakan) {
+                const roleDiv = document.createElement('div');
+                roleDiv.innerHTML = '<h4>Kebijakan dari ' + role + ':</h4><p>' + kebijakan + '</p>';
+                if (fileName) {
+                    const fileLink = document.createElement('a');
+                    fileLink.href = fileData;
+                    fileLink.download = fileName;
+                    fileLink.textContent = 'Download File: ' + fileName;
+                    fileLink.className = 'file-link';
+                    roleDiv.appendChild(fileLink);
+                }
+                displayDiv.appendChild(roleDiv);
+            }
+        });
+        
+        // Load kebijakan khusus mahasiswa dari Direktur
+        const kebijakanMahasiswaDirektur = localStorage.getItem('kebijakanMahasiswa_Direktur');
+        const fileDataMahasiswaDirektur = localStorage.getItem('kebijakanMahasiswaFileData_Direktur');
+        const fileNameMahasiswaDirektur = localStorage.getItem('kebijakanMahasiswaFileName_Direktur');
+        
+        if (kebijakanMahasiswaDirektur) {
+            const mahasiswaDivDirektur = document.createElement('div');
+            mahasiswaDivDirektur.innerHTML = '<h4>Kebijakan Khusus Mahasiswa dari Direktur:</h4><p>' + kebijakanMahasiswaDirektur + '</p>';
+            if (fileNameMahasiswaDirektur) {
+                const fileLink = document.createElement('a');
+                fileLink.href = fileDataMahasiswaDirektur;
+                fileLink.download = fileNameMahasiswaDirektur;
+                fileLink.textContent = 'Download File: ' + fileNameMahasiswaDirektur;
+                fileLink.className = 'file-link';
+                mahasiswaDivDirektur.appendChild(fileLink);
+            }
+            displayDiv.appendChild(mahasiswaDivDirektur);
+        }
+        
+        // Load kebijakan khusus mahasiswa dari Kaprodi
+        const kebijakanMahasiswaKaprodi = localStorage.getItem('kebijakanMahasiswa_Kaprodi');
+        const fileDataMahasiswaKaprodi = localStorage.getItem('kebijakanMahasiswaFileData_Kaprodi');
+        const fileNameMahasiswaKaprodi = localStorage.getItem('kebijakanMahasiswaFileName_Kaprodi');
+        
+        if (kebijakanMahasiswaKaprodi) {
+            const mahasiswaDivKaprodi = document.createElement('div');
+            mahasiswaDivKaprodi.innerHTML = '<h4>Kebijakan Khusus Mahasiswa dari Kaprodi:</h4><p>' + kebijakanMahasiswaKaprodi + '</p>';
+            if (fileNameMahasiswaKaprodi) {
+                const fileLink = document.createElement('a');
+                fileLink.href = fileDataMahasiswaKaprodi;
+                fileLink.download = fileNameMahasiswaKaprodi;
+                fileLink.textContent = 'Download File: ' + fileNameMahasiswaKaprodi;
+                fileLink.className = 'file-link';
+                mahasiswaDivKaprodi.appendChild(fileLink);
+            }
+            displayDiv.appendChild(mahasiswaDivKaprodi);
+        }
+        
+        if (!displayDiv.innerHTML.trim()) {
+            displayDiv.textContent = 'Belum ada kebijakan yang dikirim.';
+        }
+    </script>
+</body>
+</html>
